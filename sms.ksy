@@ -16,6 +16,8 @@ types:
         type: material_section
       - id: mesh_section
         type: mesh_section
+      - id: bone_section
+        type: bone_section
   file_header:
     seq:
       - id: version_string
@@ -185,6 +187,24 @@ types:
             type: vertex_def
             repeat: expr
             repeat-expr: vertex_count
+  bone_section:
+    seq:
+      - id: bone_count
+        type: u4
+      - id: bone_defs
+        type: bone_def
+        repeat: expr
+        repeat-expr: bone_count
+    types:
+      bone_def:
+        seq:
+          - id: bone_name
+            type: str
+            terminator: 0
+          - id: bone_parent
+            type: s4
+          - id: matrix
+            type: bone_matrix
   rgb_s2:
     seq:
       - id: r
@@ -199,6 +219,33 @@ types:
         type: f4
       - id: v
         type: f4
+  bone_matrix:
+    types:
+      vec3_f4:
+        seq:
+          - id: x
+            type: f4
+          - id: y
+            type: f4
+          - id: z
+            type: f4
+      vec3_s2:
+        seq:
+          - id: x
+            type: s2
+          - id: y
+            type: s2
+          - id: z
+            type: s2
+    seq:
+      - id: translation
+        type: vec3_f4
+      - id: row0
+        type: vec3_s2
+      - id: row1
+        type: vec3_s2
+      - id: row2
+        type: vec3_s2
   tri_def:
     seq:
       - id: vert_a
