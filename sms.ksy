@@ -153,17 +153,6 @@ types:
             terminator: 0
             if: has_user_data > 0
       mesh_def:
-        types:
-          tri_def:
-            seq:
-              - id: vert_a
-                type: u4
-              - id: vert_b
-                type: u4
-              - id: vert_c
-                type: u4
-              - id: material
-                type: u4
         seq:
           - id: mesh_name
             type: str
@@ -184,6 +173,18 @@ types:
             type: u4
           - id: mesh_size
             type: u4
+          - id: triangles
+            type: tri_def
+            repeat: expr
+            repeat-expr: triangle_count
+          - id: uvs
+            type: uv_f4
+            repeat: expr
+            repeat-expr: vertex_count
+          - id: vertices
+            type: vertex_def
+            repeat: expr
+            repeat-expr: vertex_count
   rgb_s2:
     seq:
       - id: r
@@ -198,7 +199,41 @@ types:
         type: f4
       - id: v
         type: f4
-  
+  tri_def:
+    seq:
+      - id: vert_a
+        type: u4
+      - id: vert_b
+        type: u4
+      - id: vert_c
+        type: u4
+      - id: material
+        type: u4
+  vertex_def:
+    types:
+      bone_rel:
+        seq:
+          - id: bone_idx
+            type: u4
+          - id: x
+            type: f4
+          - id: y
+            type: f4
+          - id: z
+            type: f4
+          - id: au
+            type: u1
+          - id: av
+            type: u1
+          - id: weight
+            type: f4
+    seq:
+      - id: bone_count
+        type: u4
+      - id: bone_relations
+        type: bone_rel
+        repeat: expr
+        repeat-expr: bone_count
   addr:
     instances:
       position:
